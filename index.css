@@ -9,8 +9,9 @@ html, body {
 html {
 	height: 100%;
 	background-color: #080808;
+	font-size: 16px;
 	font-family: "Ubuntu", "DejaVu Sans", sans-serif;
-	color: #eee;
+	color: #e4e4e4;
 }
 
 body {
@@ -49,6 +50,8 @@ main {
 }
 
 aside {
+	display: flex;
+	flex-direction: column;
 	width: var(--side-width);
 	height: calc(100vh - var(--header-height));
 	background-color: #151515;
@@ -61,10 +64,87 @@ aside#right {
 	background-image: linear-gradient(to right, rgba(255, 255, 255, .05), transparent 2px);
 }
 
+.panel-caption {
+	padding: 0 12px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 18px;
+	font-variant: small-caps;
+	font-weight: bold;
+	background-color: #333;
+	box-shadow: rgba(0, 0, 0, .75) 0 1px 1px;
+	user-select: none;
+	cursor: pointer;
+}
+
+#distribution-container {
+	padding: 25px;
+	width: 200px;
+	height: 200px;
+}
+#distribution {
+	display: block;
+	width: 200px;
+	height: 200px;
+}
+#distribution-select {
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	padding: 2px 6px;
+	width: 96px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 12px;
+	background: #111;
+	border: 1px solid #888;
+	border-radius: 2px;
+	cursor: pointer;
+}
+#distribution-select::after {
+	content: "";
+	display: block;
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	width: 8px;
+	height: 8px;
+	background-image: url("icon/retract.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#distribution-show-options {
+	display: none;
+}
+#distribution-show-options:checked ~ #distribution-options {
+	display: block;
+}
+#distribution-options {
+	display: none;
+	position: absolute;
+	right: 4px;
+	top: 26px;
+	width: 108px;
+	line-height: 16px;
+	font-size: 12px;
+	border: 1px solid #888;
+	border-top: none;
+	border-radius: 2px;
+	background-color: #111;
+}
+.distribution-option {
+	display: block;
+	padding: 0 7px;
+	cursor: pointer;
+}
+.distribution-option:hover {
+	background-color: #222;
+}
+
 article {
 	width: calc(100vw - 2 * var(--side-width));
 	height: calc(100vh - var(--header-height));
-	overflow: auto;
+	overflow: none;
 }
 
 #open {
@@ -79,6 +159,9 @@ article {
 	height: 100%;
 	cursor: pointer;
 }
+body.working #open-label {
+	display: none;
+}
 #open-icon {
 	width: 200px;
 	height: 200px;
@@ -90,4 +173,12 @@ article {
 	margin: 0 0;
 	margin-top: 1em;
 	color: rgba(255, 255, 255, .3);
+}
+
+#live {
+	position: absolute;
+	display: none;
+}
+body.working #live {
+	display: block;
 }

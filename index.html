@@ -22,8 +22,40 @@
 						Click or press Ctrl+O to open an image
 					</p>
 				</label>
+				<canvas id="live"></canvas>
 			</article>
-			<aside id="right"></aside>
+			<aside id="right">
+				<div class="panel">
+					<div class="panel-caption">
+						Color Distribution
+					</div>
+					<div id="distribution-container">
+						<canvas id="distribution"></canvas>
+						<input type="checkbox" id="distribution-show-options">
+						<div id="distribution-options">
+							<label
+								onclick="changeDistributionProjection('Saturation')"
+								for="distribution-show-options"
+								class="distribution-option">
+								Saturation
+							</label>
+							<label
+								onclick="changeDistributionProjection('Luminance')"
+								for="distribution-show-options"
+								class="distribution-option">
+								Luminance
+							</label>
+						</div>
+						<label for="distribution-show-options" id="distribution-select"></label>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-caption">
+						<span class="panel-name">History</span>
+						<div class="panel-retract"></div>
+					</div>
+				</div>
+			</aside>
 		</main>
 		<script src="index.js"></script>
 	</body>
