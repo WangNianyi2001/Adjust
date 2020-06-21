@@ -6,6 +6,88 @@ html, body {
 	width: 100%;
 }
 
-html { height: 100%; }
+html {
+	height: 100%;
+	background-color: #080808;
+	font-family: "Ubuntu", "DejaVu Sans", sans-serif;
+	color: #eee;
+}
 
-body { min-height: 100%; }
+body {
+	--header-height: 50px;
+	--side-width: 250px;
+	height: 100%;
+}
+
+.flex-separator { flex-grow: 1; }
+
+header {
+	display: flex;
+	width: 100%;
+	height: var(--header-height);
+	z-index: 10;
+	background-color: #222;
+	background-image: linear-gradient(to top, rgba(255, 255, 255, .05), transparent 2px);
+	box-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
+}
+
+main {
+	display: flex;
+}
+
+#logo {
+	width: 140px;
+	height: 100%;
+	text-align: center;
+	line-height: 50px;
+}
+#logo-content {
+	font-size: 30px;
+	font-weight: bold;
+	color: #ccc;
+	user-select: none;
+}
+
+aside {
+	width: var(--side-width);
+	height: calc(100vh - var(--header-height));
+	background-color: #151515;
+	box-shadow: rgba(0, 0, 0, .5) 0 0 2px 2px;
+}
+aside#left {
+	background-image: linear-gradient(to left, rgba(255, 255, 255, .05), transparent 2px);
+}
+aside#right {
+	background-image: linear-gradient(to right, rgba(255, 255, 255, .05), transparent 2px);
+}
+
+article {
+	width: calc(100vw - 2 * var(--side-width));
+	height: calc(100vh - var(--header-height));
+	overflow: auto;
+}
+
+#open {
+	display: none;
+}
+#open-label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+#open-icon {
+	width: 200px;
+	height: 200px;
+	background-image: url("icon/open.svg");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#open-caption {
+	margin: 0 0;
+	margin-top: 1em;
+	color: rgba(255, 255, 255, .3);
+}

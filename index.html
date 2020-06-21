@@ -6,6 +6,25 @@
 		<title>Adjust</title>
 	</head>
 	<body>
+		<header>
+			<div id="logo">
+				<span id="logo-content">Adjust</span>
+			</div>
+			<div class="flex-separator"></div>
+		</header>
+		<main>
+			<aside id="left"></aside>
+			<article>
+				<input id="open" type="file" onchange="load(this)" accept="image/*">
+				<label id="open-label" for="open">
+					<div id="open-icon"></div>
+					<p id="open-caption">
+						Click or press Ctrl+O to open an image
+					</p>
+				</label>
+			</article>
+			<aside id="right"></aside>
+		</main>
 		<script src="index.js"></script>
 	</body>
 </html>
