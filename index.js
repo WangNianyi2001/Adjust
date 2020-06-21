@@ -29,7 +29,7 @@ const TWO_OVER_SQRT3 = 1.1547;
 const distributionByLuminance = (r, g, b) => {
 	const luminance = computeLuminance(r, g, b);
 	if(r === g && g === b)
-		return [0, half_ds * (1 - luminance)];
+		return [half_ds, half_ds * (1 - luminance)];
 	const raw = [(b - g) * TWO_OVER_SQRT3, (b + g) / 2 - r];
 	const module = Math.sqrt(raw[0] * raw[0] + raw[1] * raw[1]);
 	const k = half_ds * Math.pow(luminance, 3) / module;
@@ -46,13 +46,26 @@ const distributionBySaturation = (r, g, b) => {
 		Math.floor(half_ds + raw[1] * k)
 	];
 };
-let projection_mode = 'Luminance';
-const projections = {
-	'Saturation': distributionBySaturation,
-	'Luminance': distributionByLuminance,
+let distribution_mode = 'Luminance';
+const distribution_modes = {
+	'Saturation': {
+		name: 'Saturation',
+		projection: distributionBySaturation,
+		background: 'icon/RGB-background.svg'
+	},
+	'Luminance': {
+		name: 'Luminance',
+		projection: distributionByLuminance,
+		background: 'icon/RGB-background.svg'
+	},
+	'Histogram': {
+		name: 'Histogram',
+		projection: distributionByLuminance,
+		background: 'icon/histogram-background.svg'
+	},
 };
 async function renderDistribution(source, downscale_level = 5, saturate_portion = 2e3) {
-	const projection = projections[projection_mode];
+	const projection = distribution_modes[distribution_mode].projection;
 	const canvas = document.createElement('canvas');
 	const [w, h]
 		= [canvas.width, canvas.height]
@@ -77,12 +90,26 @@ async function renderDistribution(source, downscale_level = 5, saturate_portion 
 		}
 	}
 }
-function changeDistributionProjection(mode) {
-	projection_mode = mode;
-	document.getElementById('distribution-select').innerText = mode;
+function changeDistributionMode(mode_name) {
+	if(mode_name === distribution_mode.name)
+		return;
+	distribution_mode = mode_name;
+	document.getElementById('distribution-select').innerText = mode_name;
+	document.getElementById('distribution-container').style.backgroundImage =
+		`url("${distribution_modes[mode_name].background}")`;
 	renderDistribution(live);
 }
-changeDistributionProjection('Saturation');
+const distribution_options = document.getElementById('distribution-options');
+function onchangeDistributionMode() { changeDistributionMode(this.innerText); }
+for(const mode_name in distribution_modes) {
+	const label = document.createElement('label');
+	label.setAttribute('for', 'distribution-show-options');
+	label.classList.add('distribution-option');
+	label.innerText = mode_name;
+	label.addEventListener('click', onchangeDistributionMode);
+	distribution_options.appendChild(label);
+}
+changeDistributionMode('Saturation');
 
 function load($) {
 	if(!$.files)

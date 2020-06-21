@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg
+	viewBox="0 0 250 250"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<g style="
+		stroke: #444;
+		stroke-width: 1px;
+		fill: none;
+	">
+		<rect x="25" y="25" height="200" width="200" />
+		<line x1="25" y1="75" x2="225" y2="75" />
+		<line x1="25" y1="125" x2="225" y2="125" />
+		<line x1="25" y1="175" x2="225" y2="175" />
+		<line y1="25" x1="75" y2="225" x2="75" />
+		<line y1="25" x1="125" y2="225" x2="125" />
+		<line y1="25" x1="175" y2="225" x2="175" />
+	</g>
+</svg>

@@ -81,6 +81,9 @@ aside#right {
 	padding: 25px;
 	width: 200px;
 	height: 200px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 #distribution {
 	display: block;
@@ -90,14 +93,13 @@ aside#right {
 #distribution-select {
 	position: absolute;
 	right: 4px;
-	top: 4px;
+	top: -25px;
 	padding: 2px 6px;
 	width: 96px;
 	height: 16px;
 	line-height: 16px;
 	font-size: 12px;
-	background: #111;
-	border: 1px solid #888;
+	background: #222;
 	border-radius: 2px;
 	cursor: pointer;
 }
@@ -123,18 +125,16 @@ aside#right {
 	display: none;
 	position: absolute;
 	right: 4px;
-	top: 26px;
+	top: -5px;
 	width: 108px;
 	line-height: 16px;
 	font-size: 12px;
-	border: 1px solid #888;
-	border-top: none;
 	border-radius: 2px;
-	background-color: #111;
+	background-color: rgba(0, 0, 0, .5);
 }
 .distribution-option {
 	display: block;
-	padding: 0 7px;
+	padding: 0 6px;
 	cursor: pointer;
 }
 .distribution-option:hover {

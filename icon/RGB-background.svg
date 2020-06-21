@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<svg
+	viewBox="0 0 250 250"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<g style="
+		stroke: #444;
+		stroke-width: 2;
+		stroke-linecap: round;
+		fill: none;
+	">
+		<line x1="125" y1="125" x2="125" y2="26" />
+		<line x1="125" y1="125" x2="38.4" y2="175" />
+		<line x1="125" y1="125" x2="211.6" y2="175" />
+		<circle cx="125" cy="125" r="100" />
+	</g>
+	<g style="
+		fill: #444;
+		text-anchor: middle;
+		font-size: 12px;
+	">
+		<text x="125" y="20">R</text>
+		<text x="30" y="186">G</text>
+		<text x="220" y="186">B</text>
+	</g>
+</svg>
