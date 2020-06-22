@@ -25,32 +25,48 @@ body {
 
 .selectable { user-select: auto; }
 
-.flex-separator { flex-grow: 1; }
+.span { flex-grow: 1; }
+
+.scroll { overflow-y: auto; }
 
 header {
 	display: flex;
 	width: 100%;
 	height: var(--header-height);
+	line-height: var(--header-height);
 	z-index: 10;
 	background-color: #222;
 	background-image: linear-gradient(to top, rgba(255, 255, 255, .05), transparent 2px);
 	box-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
 }
 
-main {
-	display: flex;
+#logo-area {
+	padding: 0 25px;
+	transition-property: filter;
+	transition-duration: .1s;
+	cursor: pointer;
+}
+#logo-area:hover {
+	filter: brightness(1.5);
 }
 
 #logo {
+	margin-right: 10px;
 	width: 140px;
 	height: 100%;
 	text-align: center;
-	line-height: 50px;
-}
-#logo-content {
 	font-size: 30px;
 	font-weight: bold;
 	color: #ccc;
+}
+
+#author {
+	color: #888;
+	font-weight: 500;
+}
+
+main {
+	display: flex;
 }
 
 aside {
