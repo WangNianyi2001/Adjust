@@ -1,4 +1,7 @@
-* { position: relative; }
+* {
+	position: relative;
+	user-select: none;
+}
 
 html, body {
 	margin: 0;
@@ -19,6 +22,8 @@ body {
 	--side-width: 250px;
 	height: 100%;
 }
+
+.selectable { user-select: auto; }
 
 .flex-separator { flex-grow: 1; }
 
@@ -46,7 +51,6 @@ main {
 	font-size: 30px;
 	font-weight: bold;
 	color: #ccc;
-	user-select: none;
 }
 
 aside {
@@ -73,7 +77,6 @@ aside#right {
 	font-weight: bold;
 	background-color: #333;
 	box-shadow: rgba(0, 0, 0, .75) 0 1px 1px;
-	user-select: none;
 	cursor: pointer;
 }
 
