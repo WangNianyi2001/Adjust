@@ -51,15 +51,19 @@
 	}
 
 	const histogram_width = 256;
+	const histogram_palette = [
+		'#000', '#f00', '#0f0', '#ff0',
+		'#00f', '#f0f', '#0ff', '#fff'
+	];
 	const histogram_color_sequence = [
-		['red', 'yellow'],
-		['red', 'purple'],
+		[histogram_palette[1], histogram_palette[3]],
+		[histogram_palette[1], histogram_palette[5]],
 		null,
-		['blue', 'purple'],
-		['green', 'yellow'],
+		[histogram_palette[4], histogram_palette[5]],
+		[histogram_palette[2], histogram_palette[3]],
 		null,
-		['green', 'cyan'],
-		['blue', 'cyan'],
+		[histogram_palette[2], histogram_palette[6]],
+		[histogram_palette[4], histogram_palette[6]],
 	];
 	const putLine = (ctx, color, x, y1, y2) => {
 		if(y1 === y2)
@@ -96,7 +100,7 @@
 			volumes.sort();
 			putLine(ctx, color_sequence[0], x, volumes[1], volumes[2]);
 			putLine(ctx, color_sequence[1], x, volumes[0], volumes[1]);
-			putLine(ctx, 'white', x, 0, volumes[0]);
+			putLine(ctx, histogram_palette[7], x, 0, volumes[0]);
 		}
 	}
 

@@ -3,9 +3,9 @@
 
 	// Fast pseudo gamma correction
 	// const encode = (r, g, b) => [
-	// 	r / 128 - r * r / 65536,
-	// 	g / 128 - g * g / 65536,
-	// 	b / 128 - b * b / 65536,
+	// 	r * (1 / 128 - r / 65536),
+	// 	g * (1 / 128 - g / 65536),
+	// 	b * (1 / 128 - b / 65536),
 	// ];
 	// const decode = (g, a, m) => [
 	// 	256 * (1 - Math.sqrt(1 - g)),
