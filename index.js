@@ -55,11 +55,10 @@ const histogram_color_sequence = {
 const distribution_modes = {
 	'Saturation': {
 		name: 'Saturation',
-		distribute(file) {
-			const data = file.screen.data;
+		distribute(data) {
 			for(let i = 0; i < data.length; i += 3) {
 				const gam = [data[i], data[i + 1], data[i + 2]];
-				const rgb = decodeColor(...gam);
+				const rgb = GAM.decode(...gam);
 				_distribution.beginPath();
 				_distribution.rect(...distributeBySaturation(...rgb), 1, 1);
 				_distribution.fillStyle = `rgb(${rgb.join(',')})`;
@@ -70,11 +69,10 @@ const distribution_modes = {
 	},
 	'Luminance': {
 		name: 'Luminance',
-		distribute(file) {
-			const data = file.screen.data;
+		distribute(data) {
 			for(let i = 0; i < data.length; i += 3) {
 				const gam = [data[i], data[i + 1], data[i + 2]];
-				const rgb = decodeColor(...gam);
+				const rgb = GAM.decode(...gam);
 				_distribution.beginPath();
 				_distribution.rect(...distributeByLuminance(...gam), 1, 1);
 				_distribution.fillStyle = `rgb(${rgb.join(',')})`;
@@ -85,49 +83,14 @@ const distribution_modes = {
 	},
 	'Histogram': {
 		name: 'Histogram',
-		distribute(data, opacity) {
-			opacity *= histogram_vertical_amplify;
-			const [br, bg, bb, bl] =
-				Array(4).fill(0).map(_ => Array(distribution_size).fill(0));
-			for(let i = 0; i < data.length; i += 4) {
-				const [r, g, b] = [
-					data[i],
-					data[i + 1],
-					data[i + 2]
-				];
-				const luminance = computeLuminance(r, g, b);
-				br[Math.floor(luminance * r)] += opacity;
-				bg[Math.floor(luminance * g)] += opacity;
-				bb[Math.floor(luminance * b)] += opacity;
-				bl[Math.floor(luminance * distribution_size)] += opacity;
-			}
-			_distribution.lineWidth = 1;
-			for(let i = 0; i < distribution_size; ++i) {
-				const column = [
-					['r', br[i]],
-					['g', bg[i]],
-					['b', bb[i]]
-				].sort((a, b) => b[1] - a[1]);
-				const color_sequence = histogram_color_sequence[
-					column[0][0] + column[1][0] + column[2][0]
-				];
-				const y = [column[0][1], column[1][1], column[2][1], 0];
-				for(let j = 0; j < 3; ++j) {
-					_distribution.beginPath();
-					_distribution.moveTo(i, distribution_size - y[j]);
-					_distribution.lineTo(i, distribution_size - y[j + 1]);
-					_distribution.strokeStyle = color_sequence[j];
-					_distribution.stroke();
-				}
-			}
-		},
+		distribute(data) {},
 		background: 'icon/histogram-background.svg'
 	},
 };
 function renderDistribution(file) {
 	setTimeout(() => {
 		_distribution.clearRect(0, 0, distribution_size, distribution_size);
-		distribution_modes[distribution_mode].distribute(file);
+		distribution_modes[distribution_mode].distribute(file.thumbnail.data);
 	});
 }
 function changeDistributionMode(mode_name) {
@@ -162,16 +125,17 @@ function load($) {
 		document.body.classList.add('working');
 		const scale_ratio = Math.min(
 			article.offsetWidth / image.width,
-			article.offsetHeight / image.height
-		)
+			article.offsetHeight / image.height,
+			1
+		);
 		const
 			[screen_width, screen_height] =
 			[live.width, live.height] = [
 				image.width * scale_ratio,
 				image.height * scale_ratio
 			];
-		file = new GAMFile(image, screen_width, screen_height);
-		putImage(image, live);
+		file = new GAM.File(image, screen_width, screen_height);
+		putImage(image, live) ;
 		renderDistribution(file);
 		[live.style.width, live.style.height] = [
 			screen_width + 'px',
