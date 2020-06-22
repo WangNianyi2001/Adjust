@@ -1,5 +1,10 @@
 'use strict';
 
+for(const $icon of document.getElementsByClassName('tool-icon')) {
+	const name = $icon.getAttribute('name');
+	$icon.style.backgroundImage = `url("icon/${name}.svg")`;
+}
+
 const $live = document.getElementById('live'), _live = $live.getContext('2d');
 const $distribution = document.getElementById('distribution');
 
