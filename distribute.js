@@ -6,10 +6,10 @@
 		this.background = background;
 	}
 	Distribution.prototype = {
-		render(frame, $cvs) {
+		render(imajs, $cvs) {
 			const ctx = $cvs.getContext('2d');
 			ctx.clearRect(0, 0, $cvs.width, $cvs.height);
-			this.renderer(frame.data, ctx);
+			this.renderer(imajs, ctx);
 		},
 	}
 
@@ -24,18 +24,18 @@
 		ctx.fill();
 	};
 	const INV2OVERSQRT3 = 2 / Math.sqrt(3);
-	function distributeBySaturation(data, ctx) {
-		for(let t = 0, i = 0; t < data.length; ++t) {
-			const gam = [data[i++], data[i++], data[i++]];
+	function distributeBySaturation(imajs, ctx) {
+		for(let i = 0; i < imajs.size; ++i) {
+			const gam = GAM.encode(imajs.R[i], imajs.G[i], imajs.B[i]);
 			const x = (gam[2] - gam[1]) * INV2OVERSQRT3;
 			const y = gam[0] - (gam[1] + gam[2]) / 2;
 			putPixel(ctx, gam, x, y);
 		}
 	}
 
-	function distributeByLuminance(data, ctx) {
-		for(let t = 0, i = 0; t < data.length; ++t) {
-			const gam = [data[i++], data[i++], data[i++]];
+	function distributeByLuminance(imajs, ctx) {
+		for(let i = 0; i < imajs.size; ++i) {
+			const gam = GAM.encode(imajs.R[i], imajs.G[i], imajs.B[i]);
 			const luminance = GAM.computeLuminance(...gam);
 			if(gam[0] === gam[1] && gam[1] === gam[2]) {
 				const angle = Math.random() * 2 * Math.PI;
@@ -76,18 +76,19 @@
 		ctx.stroke();
 	};
 	const histogram_portion = 0.1;
-	function distributeByHistogram(data, ctx) {
+	function distributeByHistogram(imajs, ctx) {
 		const
 			gbucket = new Uint32Array(histogram_width),
 			abucket = new Uint32Array(histogram_width),
 			mbucket = new Uint32Array(histogram_width);
-		for(let t = 0, i = 0; t < data.length; ++t) {
-			++gbucket[Math.round(data[i++] * histogram_width)];
-			++abucket[Math.round(data[i++] * histogram_width)];
-			++mbucket[Math.round(data[i++] * histogram_width)];
+		for(let i = 0; i < imajs.size; ++i) {
+			const [g, a, m] = GAM.encode(imajs.R[i], imajs.G[i], imajs.B[i]);
+			++gbucket[Math.round(g * histogram_width)];
+			++abucket[Math.round(a * histogram_width)];
+			++mbucket[Math.round(m * histogram_width)];
 		}
 		const x_scale = ctx.canvas.width / histogram_width;
-		const y_scale = 3 * histogram_portion * ctx.canvas.width * ctx.canvas.height / data.length;
+		const y_scale = 3 * histogram_portion * ctx.canvas.width * ctx.canvas.height / imajs.size;
 		for(let i = 0; i < histogram_width; ++i) {
 			const x = i * x_scale;
 			const gvolume = gbucket[i], avolume = abucket[i], mvolume = mbucket[i];

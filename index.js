@@ -5,10 +5,11 @@ for(const $icon of document.getElementsByClassName('tool-icon')) {
 	$icon.style.backgroundImage = `url("icon/${name}.svg")`;
 }
 
-const $live = document.getElementById('live'), _live = $live.getContext('2d');
+const $live = document.getElementById('live')
+const _live = $live.getContext('2d');
 const $distribution = document.getElementById('distribution');
 
-let file, distribution;
+let thumbnail, distribution;
 
 function setDistribution(name) {
 	if(distributions[name] === distribution)
@@ -17,9 +18,7 @@ function setDistribution(name) {
 	document.getElementById('distribution-select').innerText = name;
 	document.getElementById('distribution-container').style.backgroundImage
 		= `url("${distribution.background}")`;
-	if(!file)
-		return;
-	setTimeout(distribution.render.bind(distribution, file.thumbnail, $distribution));
+	setTimeout(distribution.render.bind(distribution, thumbnail, $distribution));
 }
 const $distribution_options = document.getElementById('distribution-options');
 function onchangeDistributionMode() { setDistribution(this.innerText); }
@@ -49,9 +48,9 @@ function onImageLoad() {
 		($article.offsetWidth - screenW) / 2 + 'px',
 		($article.offsetHeight - screenH) / 2 + 'px'
 	];
-	file = new GAM.File(this, screenW, screenH);
 	_live.drawImage(this, 0, 0, screenW, screenH);
-	distribution.render(file.thumbnail, $distribution);
+	thumbnail = ImaJs.fromImage(this, Math.min(256, this.width), Math.min(256, this.height));
+	distribution.render(thumbnail, $distribution);
 }
 document.getElementById('open').addEventListener('change', function() {
 	const file = this.files[0];
